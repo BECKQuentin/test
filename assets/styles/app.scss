@@ -1,0 +1,15 @@
+
+@import "custom/variables";
+
+.content_box {
+    position: relative;
+    border: none;
+    background-color: $secondary;
+    padding-bottom: 10px;
+    margin: 5px 20px 40px 20px;
+    border-radius: 6px;
+    box-shadow: rgba(0, 0, 0, 0.3) 2px 4px 3px;
+    @media (max-width: 576px) {
+        margin: 5px 8px 40px 8px;
+    }
+}

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="fr">
+{% set route_name = app.request.attributes.get('_route') %}
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Home | Gemonos{% endblock %}</title>
+    <meta name="description" content="">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="">
+    <meta name="author" content="BECK Quentin">
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#ffffff">
+    <meta property="og:title" content=""/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:description" content="Gemonos"/>
+    <meta property="og:url" content=""/>
+    <meta property="og:locale" content="fr_FR"/>
+    <meta property="og:site_name" content=""/>
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content=""/>
+    <meta name="twitter:site:id" content=""/>
+    <meta name="twitter:creator" content=""/>
+    <meta name="twitter:creator:id" content=""/>
+    <meta name="twitter:url" content="">
+    <meta name="twitter:title" content="">
+    <meta name="twitter:description" content="">
+    <meta property="og:image" content=""/>
+    <meta name="twitter:image" content="">
+
+
+    {% block stylesheets %}
+        {{ encore_entry_link_tags('app') }}
+        {{ encore_entry_link_tags('base') }}
+        <!--FAVICON-->
+        <link rel="icon" type="image/png" href="{{ asset('img/logos/logo-elan.png') }}"/>
+        <!--Font Awesome-->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+              integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    {% endblock %}
+
+    {% block javascripts %}
+        {{ encore_entry_script_tags('app') }}
+        {{ encore_entry_script_tags('base') }}
+    {% endblock %}
+
+</head>
+
+<body>
+<div id="app">
+    <app></app>
+</div>
+</body>
+</html>
+
+{% block vue_templates '' %}
+
+<template id="app_template">
+
+    <div id="homeCarousel">
+
+        <div id="homeCarouselContent">
+            <div class="home_item"><a href="">Projects</a></div>
+            <div class="home_item"><a href="">Stone</a></div>
+            <div class="home_item"><a href="">Love</a></div>
+            <div class="home_item"><a href="">Messages</a></div>
+            <div class="home_item"><a href="">Contact</a></div>
+        </div>
+
+    </div>
+
+</template>

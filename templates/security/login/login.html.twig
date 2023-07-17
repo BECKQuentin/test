@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <title>
+        {% block title %}Login | Coprotec - ELAN{% endblock %}
+    </title>
+
+    {% block stylesheets %}
+
+        {{ encore_entry_link_tags('app') }}
+        {{ encore_entry_link_tags('login') }}
+        <!--FAVICON-->
+        <link rel="icon" type="image/png" href="{{ asset('img/logos/logo-elan.png') }}"/>
+        <!--Font Awesome-->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+              integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    {% endblock %}
+
+</head>
+
+<body>
+
+<div id="login">
+
+    <div class="content_box py-4 px-3 py-sm-5 px-sm-4">
+        {% if error %}
+            <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+        {% endif %}
+
+
+        <div><img class="logo_login" src="{{ asset('img/logos/logo-elan.png') }}" alt=""></div>
+        {% if app.environment == 'dev' %}
+            <h1 class="text-center mx-5 mb-4">Preprod</h1>
+        {% endif %}
+
+        <div class="d-flex flex-column align-items-center">
+            <form action="{{ path('app_login') }}" method="post" style="max-width: 280px">
+                <div class="form-group mb-2">
+                    <div class="d-flex align-items-center">
+                        <i class="fa-solid fa-user px-1"></i>
+                        <input class="form-control" type="text" id="inputEmail" name="email" placeholder="Email" value="{{ last_username }}"/>
+                    </div>
+
+                </div>
+                <div class="position-relative form-group mb-2">
+                    <div class="d-flex align-items-center">
+                        <i class="fa-solid fa-lock px-1"></i>
+                        <input class="form-control" type="password" id="password" name="password" placeholder="Password"/>
+                    </div>
+                    <i id="login_password_show" class="position-absolute fa-solid fa-eye fs-8 px-1" style="right: 0; top: 50%; transform: translateY(-50%); cursor: pointer"></i>
+                </div>
+
+                {% if csrf_token('authenticate') %}
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}" />
+                {% endif %}
+
+                <div class="checkbox mb-3">
+                    <label>
+                        <input type="checkbox" name="_remember_me"> Se souvenir de moi
+                    </label>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Connexion</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% block javascripts %}
+    {{ encore_entry_script_tags('login') }}
+{% endblock %}
+
+</body>
+</html>
