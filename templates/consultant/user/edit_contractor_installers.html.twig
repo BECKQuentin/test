@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit {{ user.fullname }}{% endblock %}
+
+{% block body %}
+
+    <div class="row flex-column flex-lg-row">
+        <div class="col-12 col-sm-3">
+            {% include 'user/customer_card.html.twig' %}
+        </div>
+        <div class="col-12 col-sm-9">
+            <div class="content_box">
+
+                <h2>Modifier les installateurs de {{ user.fullname }}</h2>
+
+                <div class="content_box_element">
+
+                    <div class="btn btn-elan d-flex flex-column">
+                        <div>{{ 'plus'|svg }}{{ 'screwdriver-wrench'|svg }}</div>
+                        <span>Ajouter un installateur</span>
+                    </div>
+
+                    {{ form_start(form) }}
+
+                    {{ form_end(form) }}
+
+                    {% for installer in installers %}
+                        {{ installer.user.fullname }}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,15 @@
+{% if user is not null %}
+        <div title="Role">
+
+        {% if 'ROLE_CONSULTANT' in user.roles %}
+                <b>{{ constant('App\\Entity\\User::ROLE_CONSULTANT') }}</b>
+        {% elseif 'ROLE_CONTRACTOR'in user.roles %}
+                <b>{{ constant('App\\Entity\\User::ROLE_CONTRACTOR') }}</b>
+        {% elseif 'ROLE_INSTALLER'in user.roles %}
+                <b>{{ constant('App\\Entity\\User::ROLE_INSTALLER') }}</b>
+        {% elseif 'ROLE_ADMIN' in user.roles %}
+                <b>{{ constant('App\\Entity\\User::ROLE_ADMIN') }}</b>
+        {% endif %}
+
+        </div>
+{% endif %}

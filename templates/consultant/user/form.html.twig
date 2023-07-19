@@ -1,0 +1,33 @@
+{% if userForm is defined %}
+    {{ form_start(userForm) }}
+    <div class="row">
+
+
+        {% if userForm.user.email is defined %}
+            <div class="col-12">{{ form_row(userForm.user.email) }}</div>
+        {% endif %}
+        <div class="col-12 col-sm-6">{{ form_row(userForm.user.firstname) }}</div>
+        <div class="col-12 col-sm-6">{{ form_row(userForm.user.lastname) }}</div>
+
+        <div class="col-12 col-sm-6">{{ form_row(userForm.user.phone) }}</div>
+        <div class="col-12 col-sm-6">{{ form_row(userForm.user.mobile) }}</div>
+
+        {% if userForm.num_contrat_cadre is defined %}
+            <div class="col-12 col-sm-6">{{ form_row(userForm.num_contrat_cadre) }}</div>
+            <div class="col-12 col-sm-6">{{ form_row(userForm.social_reason) }}</div>
+
+            <div class="col-12 col-sm-6">{{ form_row(userForm.num_siret) }}</div>
+
+            <div class="col-12 col-sm-6">{{ form_row(userForm.address) }}</div>
+
+            <div class="col-12 col-sm-4">{{ form_row(userForm.postal_code) }}</div>
+            <div class="col-12 col-sm-8">{{ form_row(userForm.city) }}</div>
+        {% endif %}
+
+
+
+        <input type="submit" value="Ajouter" class="btn btn-primary">
+
+    </div>
+    {{ form_end(userForm) }}
+{% endif %}

@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block body %}
+
+<div class="row">
+
+    <div class="col-3">
+        {% include 'user/customer_card.html.twig' %}
+    </div>
+
+    <div class="col-9">
+        <div class="d-flex flex-wrap">
+            <a class="btn-elan card-profil card d-flex justify-center align-items-center m-2" href="{{ path('user_edit') }}">
+                <div class="card-body">
+                    <div class="text-center">{{ 'user-gear'|svg }}</div>
+                    <h5 class="card-title text-center">Modifier mon profil</h5>
+                </div>
+            </a>
+            <a class="btn-elan card-profil card d-flex justify-center align-items-center m-2" href="">
+                <div class="card-body">
+                    <div class="text-center">{{ 'file-signature'|svg }}</div>
+                    <h5 class="card-title text-center">Mes mandats</h5>
+                </div>
+            </a>
+            <a class="btn-elan card-profil card d-flex justify-center align-items-center m-2" href="">
+                <div class="card-body">
+                    <div class="text-center">{{ 'folder-open'|svg }}</div>
+                    <h5 class="card-title text-center">Mes dossiers</h5>
+                </div>
+            </a>
+        </div>
+    </div>
+
+</div>
+
+
+
+
+    
+
+{% endblock %}
+

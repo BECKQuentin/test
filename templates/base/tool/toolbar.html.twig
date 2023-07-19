@@ -11,7 +11,7 @@
         <ul class="navbar-nav d-flex flex-column">
             <li class="d-none d-sm-block nav-item">
                 <a id="hideToolbar" class="nav-link" href="/" title="Déployer">
-                    <i class="fa-solid fa-bars"></i>
+                    {{ 'bars'|svg }}
                 </a>
             </li>
 
@@ -19,134 +19,88 @@
 
             <li class="d-none d-sm-block nav-item">
                 <a class="nav-link" href="/" title="Accueil">
-                    <i class="fa-solid fa-chess-rook"></i>
-                    <span class="d-inline d-sm-none"><img src="{{ asset('img/security/logos/cropped-logo-musee-vodou.png') }}" alt="" style="height : 20px"></span>
+                    {{ 'solar-panel'|svg }}<span class="d-inline d-sm-none pe-2">Accueil</span>
                 </a>
             </li>
             <li class="nav-item dropend toolbar_dropdown">
                 <a class="nav-link link_underline"
                    href="" title="Objets"
                    id="navbarDropdownObjects" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <i class="fa-solid fa-box-archive"></i><span class="d-inline d-sm-none">Inventaire</span>
+                    {{ 'box-archive'|svg }}<span class="d-inline d-sm-none">Mes dossiers</span>
                 </a>
                 <div class="dropdown-menu px-2" aria-labelledby="navbarDropdownObjects">
-                    <a class="dropdown-item link_underline"
-                       href="">
-                        <span><i class="fa-solid fa-box"></i>Tous les objets</span>
+                    <a class="dropdown-item link_underline" href="">
+                        <span>{{ 'folder-open'|svg }}Tous mes dossiers</span>
                     </a>
-                    {% if is_granted('ROLE_MEMBER') %}
-                        <a class="dropdown-item link_underline" href="">
-                            <span><i class="fa-solid fa-plus"></i>Ajouter un objet</span>
-                        </a>
-                    {% endif %}
+                    <a class="dropdown-item link_underline" href="">
+                        <span>{{ 'folder-plus'|svg }}Ajouter un objet</span>
+                    </a>
                     <a class="dropdown-item" href="">
-                        <span><i class="fa-solid fa-bookmark"></i>Mes Favoris</span>
+                        <span>{{ 'bookmark-full'|svg }}Mes Favoris</span>
                     </a>
-                    {% if is_granted('ROLE_MEMBER') %}
-                        <a class="dropdown-item" href="">
-                            <span><i class="fa-solid fa-star"></i>Favoris Partagés</span>
-                        </a>
-                    {% endif %}
                 </div>
             </li>
-            {% if is_granted('ROLE_MEMBER') %}
-                <li class="nav-item dropend toolbar_dropdown">
-                    <a class="nav-link link_underline"
-                       href="" title="Categories"
-                       id="navbarDropdownTags" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="fa-solid fa-tags"></i><span class="d-inline d-sm-none">Menus déroulants</span>
-                    </a>
-                    <div class="dropdown-menu px-2" aria-labelledby="navbarDropdownTags">
-                        <a class="dropdown-item link_underline">
-                            <span><i class="fa-solid fa-seedling"></i>Nom Vernaculaire</span>
-                        </a>
-                        <a class="dropdown-item link_underline" href="">
-                            <span><i class="fa-solid fa-list"></i>Typologie</span>
-                        </a>
-                        <a class="dropdown-item link_underline" href="">
-                            <span><i class="fa-solid fa-person"></i>Population</span>
-                        </a>
-                        <a class="dropdown-item link_underline" href="">
-                            <span><i class="fa-brands fa-pagelines"></i>Origine</span>
-                        </a>
-                        <a class="dropdown-item link_underline" href="">
-                            <span><i class="fa-solid fa-person-praying"></i>Divinités</span>
-                        </a>
-                        <a class="dropdown-item link_underline" href="">
-                            <span><i class="fa-solid fa-brush"></i>Matériaux</span>
-                        </a>
-                        <a class="dropdown-item link_underline" href="">
-                            <span><i class="fa-solid fa-recycle"></i>Etat</span>
-                        </a>
-                        <a class="dropdown-item link_underline" href="">
-                            <span><i class="fa-solid fa-chess-rook"></i>Etage</span>
-                        </a>
-                        <a class="dropdown-item link_underline" href="">
-                            <span><i class="fa-solid fa-book-open"></i>Catalogues</span>
-                        </a>
-                    </div>
-                </li>
-            {% endif %}
-            <li class="nav-item dropend toolbar_dropdown">
-                <a class="nav-link link_underline"
-                   href="" title="Collections"
-                   id="navbarDropdownCollection" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <i class="fa-solid fa-book"></i><span class="d-inline d-sm-none">Bibliographie</span>
-                </a>
-                <div class="dropdown-menu px-2" aria-labelledby="navbarDropdownCollection">
-                    <a class="dropdown-item link_underline" href="">
-                        <span><i class="fa-solid fa-book"></i>Bibliographie thématique</span>
-                    </a>
-                    {% if is_granted('ROLE_MEMBER') %}
-                        <a class="dropdown-item link_underline" href="">
-                            <span><i class="fa-solid fa-plus"></i>Ajouter une bibliographie thématique</span>
-                        </a>
-                    {% endif %}
-                    <a class="dropdown-item link_underline" href="">
-                        <span><i class="fa-solid fa-book-open"></i>Liste d'ouvrages</span>
-                    </a>
-                    {% if is_granted('ROLE_MEMBER') %}
-                        <a class="dropdown-item link_underline" href="">
-                            <span><i class="fa-solid fa-plus"></i>Ajouter un ouvrage</span>
-                        </a>
-                    {% endif %}
-                </div>
-            </li>
+
             <hr class="m-0">
 
             <li class="nav-item">
                 <a class="nav-link link_underline" href="#" title="Message">
-                    <i class="fa-solid fa-message"></i><span></span>
+                    {{ 'message'|svg }}<span class="d-inline d-sm-none">Mes tickets</span>
                 </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link link_underline" href="#" title="Calendrier">
-                    <i class="fa-solid fa-calendar"></i><span></span>
+                    {{ 'calendar-full'|svg }}<span class="d-inline d-sm-none">Mes échéances</span>
                 </a>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link link_underline" href="">
-                    <i class="fa-solid fa-user-group"></i><span class="d-inline d-sm-none">Profil</span>
+                <a class="nav-link link_underline" href="{{ path('user_dashboard') }}" title="Profil">
+                    {{ 'user'|svg }}<span class="d-inline d-sm-none">Profil</span>
                 </a>
             </li>
-            {% if is_granted('ROLE_MEMBER') %}
-                <li class="nav-item ">
-                    <a class="nav-link link_underline" href="" title="Graphiques">
-                        <i class="fa-solid fa-chart-line"></i><span class="d-inline d-sm-none">Statistics</span>
+
+            <li class="nav-item">
+                <a class="nav-link link_underline" href="" title="Actualités">
+                    {{ 'newspaper'|svg }}<span class="d-inline d-sm-none">Actualités</span>
+                </a>
+            </li>
+
+            <hr class="m-0">
+
+            {% if is_granted('ROLE_CONSULTANT') %}
+                <li class="nav-item">
+                    <a class="nav-link link_underline" href="" title="Statistiques">
+                        {{ 'chart-column'|svg }}<span class="d-inline d-sm-none">Statistiques</span>
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link link_underline" href="" title="Actualités">
-                        <i class="fa-regular fa-newspaper"></i><span class="d-inline d-sm-none">Actualités</span>
+
+                <li class="nav-item dropend toolbar_dropdown">
+                    <a class="nav-link link_underline" href="{{ path('users_index') }}" title="Utilisateurs"
+                       id="navbarDropdownUsers" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        {{ 'users'|svg }}<span class="d-inline d-sm-none">Utilisateurs</span>
                     </a>
+                    <div class="dropdown-menu px-2" aria-labelledby="navbarDropdownUsers">
+                        <a class="dropdown-item link_underline" href="{{ path('users_index') }}">
+                            <span>{{ 'user-gear'|svg }}Tous les utilisateurs</span>
+                        </a>
+                        <a class="dropdown-item link_underline" href="{{ path('consultant_add_users') }}">
+                            <span>{{ 'user-plus'|svg }}Nouvel utilisateur</span>
+                        </a>
+                    </div>
+                </li>
+                <li class="nav-item dropend toolbar_dropdown">
+                    <a class="nav-link link_underline" href="" title="Mailing"
+                       id="navbarDropdownMailing" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        {{ 'envelope'|svg }}<span class="d-inline d-sm-none">Mailing</span>
+                    </a>
+                    <div class="dropdown-menu px-2" aria-labelledby="navbarDropdownMailing">
+                        <a class="dropdown-item link_underline" href="">
+                            <span>{{ 'envelope'|svg }}Tous les mails</span>
+                        </a>
+                    </div>
                 </li>
             {% endif %}
-            <li class="nav-item">
-                <a class="nav-link link_underline" href="" title="Stylisation">
-                    <i class="fa-solid fa-palette"></i><span class="d-inline d-sm-none">Stylisation</span>
-                </a>
-            </li>
 
             <hr class="m-0">
 
@@ -154,25 +108,25 @@
                 <li class="nav-item dropend toolbar_dropdown">
                     <a class="nav-link link_underline" href="" title="Monitoring"
                        id="navbarDropdownMonitoring" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="fa-solid fa-desktop"></i><span class="d-inline d-sm-none">Monitoring</span>
+                        {{ 'desktop'|svg }}<span class="d-inline d-sm-none">Monitoring</span>
                     </a>
                     <div class="dropdown-menu px-2" aria-labelledby="navbarDropdownMonitoring">
                         <a class="dropdown-item link_underline" href="">
-                            <span><i class="fa-solid fa-list-ul"></i>Action Log</span>
+                            <span>{{ 'list-ul'|svg }}Action Log</span>
                         </a>
                         <a class="dropdown-item link_underline" href="">
-                            <span><i class="fa-solid fa-screwdriver-wrench"></i>Paramètre Site</span>
+                            <span>{{ 'screwdriver-wrench'|svg }}Paramètre Site</span>
                         </a>
                         <a class="dropdown-item link_underline" href="">
-                            <span><i class="fa-solid fa-trash-can"></i>Objets Supprimés</span>
+                            <span>{{ 'trash-can'|svg }}Dossiers Supprimés</span>
                         </a>
                     </div>
                 </li>
             {% endif %}
         </ul>
 
-        <div class="d-block d-sm-none py-2" style="border-bottom: 4px solid var(--main)">
-{#            {% include 'security/tool/navbar_mobile_footer.html.twig' %}#}
+        <div class="d-block d-sm-none py-2" style="border-bottom: 4px solid var(--primary)">
+{#            {% include 'base/tool/navbar_mobile_footer.html.twig' %}#}
         </div>
 
     </div>

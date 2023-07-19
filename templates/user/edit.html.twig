@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Profil utilisateur{% endblock %}
+
+{% block body %}
+
+    <div class="row">
+        <div class="col-3">
+            {% include 'user/customer_card.html.twig' %}
+        </div>
+        <div class="col-9">
+            <div class="content_box">
+
+                <h2>Modifier profil</h2>
+
+                <div class="content_box_element">
+                    {{ form_start(userForm) }}
+
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="col-6">{{ form_row(userForm.firstname) }}</div>
+                            <div class="col-6">{{ form_row(userForm.lastname) }}</div>
+                            <div class="col-6">{{ form_row(userForm.phone) }}</div>
+                            <div class="col-6">{{ form_row(userForm.mobile) }}</div>
+                            <div class="col-12">{{ form_rest(userForm) }}</div>
+                        </div>
+
+                        <div class="col-6">
+                            <a href="{{ path('user_change_password') }}" class="btn btn-elan mb-1">Changer de mot de passe</a>
+                            <a href="{{ path('user_change_email') }}" class="btn btn-elan mb-1">Changer d'Email</a>
+                        </div>
+
+                    </div>
+                    {{ form_end(userForm) }}
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}

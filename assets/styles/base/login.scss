@@ -1,0 +1,30 @@
+@import "../custom/variables";
+
+$randBgLogin: random(2);
+$listBgLogin: Hexagon, RectLight;
+$nthBgLogin: nth($listBgLogin, $randBgLogin);
+
+#login {
+  height: 100vh !important;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-image: url("../../img/base/background/#{$nthBgLogin}.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+
+  .content_box {
+    position: relative;
+    border: none;
+    background-color: $secondary;
+    padding-bottom: 10px;
+    margin: 5px 20px 40px 20px;
+    border-radius: 6px;
+    box-shadow: rgba(0, 0, 0, 0.3) 2px 4px 3px;
+    @media (max-width: 576px) {
+      margin: 5px 8px 40px 8px;
+    }
+  }
+}

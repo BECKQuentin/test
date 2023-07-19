@@ -4,8 +4,17 @@ controllers:
         namespace: App\Controller
     type: attribute
 
-
-myflix:
-    resource: ../src/Controller/Myflix
+user:
+    resource: ../src/Controller/User
     type: attribute
-    prefix: '/myflix'
+    prefix: '/u/'
+
+consultant:
+    resource: ../src/Controller/Consultant
+    type: attribute
+    prefix: 'consultant'
+
+admin:
+    resource: ../src/Controller/Admin
+    type: attribute
+    prefix: '_admin'

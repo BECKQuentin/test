@@ -14,10 +14,10 @@ class BaseController extends AbstractController
     public function __construct(
     ){}
 
-    #[Route('/', name: 'base')]
+    #[Route('/', name: 'home')]
     public function home(): Response
     {
-        return $this->render('base.html.twig', [
+        return $this->render('home/home.html.twig', [
 
         ]);
     }
@@ -26,14 +26,11 @@ class BaseController extends AbstractController
     public function redirectUser(): RedirectResponse
     {
 
-        if ($this->isGranted('ROLE_ADMIN')) {
-            return $this->redirectToRoute('home');
+        if ($this->isGranted('ROLE_CONSULTANT')) {
+            return $this->redirectToRoute('consultant_dashboard');
         }
-        elseif ($this->isGranted('ROLE_MEMBER')) {
-            return $this->redirectToRoute('home');
-        }
-        elseif ($this->isGranted('ROLE_GUEST')) {
-            return $this->redirectToRoute('home');
+        elseif ($this->isGranted('ROLE_INSTALLER')) {
+            return $this->redirectToRoute('user_dashboard');
         }
         else {
             return $this->redirectToRoute('app_login');
@@ -44,7 +41,7 @@ class BaseController extends AbstractController
     #[Route('/mentions-legales', name: 'legal_notice')]
     public function legalNotice()
     {
-        return $this->render('security/legal_notice.html.twig', [
+        return $this->render('base/legal_notice.html.twig', [
 
         ]);
     }

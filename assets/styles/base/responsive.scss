@@ -1,0 +1,28 @@
+
+/*Plus petit que*/
+@media (max-width: 576px) {
+  nav {
+    height: 100%;
+    background-color: $primary;
+  }
+  .logo_login {
+    height: 90px;
+  }
+  .toolbar_retract_page {
+    margin-left: 0 !important;
+  }
+  .modal-dialog {
+    top: 107px;
+  }
+}
+
+/*Plus grand que*/
+@media (min-width: 767px) {
+  .w-md-auto {
+    width: auto;
+  }
+}
+
+@media (max-width:1380px) {
+
+}

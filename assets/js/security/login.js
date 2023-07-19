@@ -1,5 +1,8 @@
 
-import '../../styles/security/login.scss';
+import '../../styles/base/login.scss';
+
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.bundle.min';
 
 
 let passwordInput = document.getElementById('password');

@@ -1,0 +1,16 @@
+{% set route_name = app.request.attributes.get('_route') %}
+
+<div class="top_tabs">
+    {% for tab in tabs %}
+        {% if is_granted(tab.role) %}
+            <a href="{{ path(tab.url) }}" class="col-2 btn btn-elan d-flex flex-column {{ route_name is same as tab.url ? 'actived' }}" title="{{ tab.title }}">
+                <span>
+                    {% for svg in tab.svgs %}
+                        {{ svg|svg }}
+                    {% endfor %}
+                </span>
+                {{ tab.title }}
+            </a>
+        {% endif %}
+    {% endfor %}
+</div>

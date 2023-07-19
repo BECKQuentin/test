@@ -3,7 +3,7 @@
 {% set route_name = app.request.attributes.get('_route') %}
 <head>
     <meta charset="UTF-8">
-    <title>{% block title %}Home | Gemonos{% endblock %}</title>
+    <title>{% block title %}Accueil{% endblock %} | Coprotec - ELAN</title>
     <meta name="description" content="">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,7 +13,7 @@
     <meta name="theme-color" content="#ffffff">
     <meta property="og:title" content=""/>
     <meta property="og:type" content="website"/>
-    <meta property="og:description" content="Gemonos"/>
+    <meta property="og:description" content="Coprotec | ELAN"/>
     <meta property="og:url" content=""/>
     <meta property="og:locale" content="fr_FR"/>
     <meta property="og:site_name" content=""/>
@@ -31,17 +31,13 @@
 
     {% block stylesheets %}
         {{ encore_entry_link_tags('app') }}
-        {{ encore_entry_link_tags('base') }}
         <!--FAVICON-->
-        <link rel="icon" type="image/png" href="{{ asset('img/logos/logo-elan.png') }}"/>
-        <!--Font Awesome-->
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
-              integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <link rel="icon" type="image/png" href="{{ asset('assets/img/logos/logo-elan.png') }}"/>
     {% endblock %}
 
     {% block javascripts %}
         {{ encore_entry_script_tags('app') }}
-        {{ encore_entry_script_tags('base') }}
+        {{ encore_entry_script_tags('vue') }}
     {% endblock %}
 
 </head>
@@ -57,16 +53,45 @@
 
 <template id="app_template">
 
-    <div id="homeCarousel">
+        <div class="d-flex flex-row flex-md-column">
+            <div id="toolbar" class="col-1 col-md-2 toolbar_retract">
+                {% include 'base/tool/toolbar.html.twig'%}
+            </div>
+            <div id="page" class="offset-1 offset-md-2 col-11 col-md-10 toolbar_retract_page w-md-auto">
 
-        <div id="homeCarouselContent">
-            <div class="home_item"><a href="">Projects</a></div>
-            <div class="home_item"><a href="">Stone</a></div>
-            <div class="home_item"><a href="">Love</a></div>
-            <div class="home_item"><a href="">Messages</a></div>
-            <div class="home_item"><a href="">Contact</a></div>
+                <div class="d-flex">
+                    <div class="col-12 col-sm-9 m-0 p-0">
+
+                        <a href="">
+                            <div id="search_item_toolbar_button" class="search form-group">
+                                <div class="form-control">Rechercher</div>
+                            </div>
+                        </a>
+
+                    </div>
+                    <div class="d-none d-sm-block col-3 m-0 p-0">
+                        {% include 'base/tool/login_tool.html.twig' %}
+                    </div>
+                </div>
+
+
+                <div id="content" class="d-flex flex-column justify-content-between" style="min-height: 92vh">
+                    <div>
+                        <h1 class="text-end pe-4 text-white">Coprotec - ELAN</h1>
+
+                        <div class="mx-3">
+                            {% include "base/flash.html.twig" %}
+                        </div>
+
+                        {% block body %}
+
+
+                        {% endblock %}
+                    </div>
+
+                    {% include "base/footer.html.twig" %}
+                </div>
+            </div>
         </div>
-
-    </div>
 
 </template>

@@ -1,0 +1,22 @@
+//CUSTOMER CARD//
+#customerCard {
+  max-width: 408px;
+  .avatar {
+
+    img {
+      height: 80px;
+      width: 80px;
+      border-radius: 50%;
+    }
+  }
+  .content_box_element {
+    .infos {
+      .infos_box {
+        span {
+          text-align: end;
+          font-weight: bold;
+        }
+      }
+    }
+  }
+}

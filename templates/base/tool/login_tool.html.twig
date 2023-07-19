@@ -1,0 +1,34 @@
+<div class="login d-flex align-items-center justify-content-between">
+    <div class="login_notif mx-3">
+        <a href="">
+            {{ 'bell'|svg }}
+        </a>
+    </div>
+    <div class="user_profil d-flex align-items-center">
+        {% if app.user %}
+            <a class="nav-link p-0" href="{{ path('user_dashboard') }}" title="Mon profil">
+                    <span class="login_user_profil">
+                        {{ app.user.fullname }}
+                    </span>
+            </a>
+        {% endif %}
+        <div class="login_dropdown dropdown show">
+            <a class="btn dropdown-toggle shadow-none" href="#" role="button" id="loginDropdownLink" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span>{{ 'ellipsis-vertical'|svg }}</span>
+            </a>
+            <div class="dropdown-menu px-2" aria-labelledby="loginDropdownLink">
+                <a href="{{ path('user_dashboard') }}" class="dropdown-item link_underline text-end">Mon profil<span class="px-2">{{ 'user-gear'|svg }}</span></a>
+                <div class="d-flex">
+{#                    <a href="{{ path('claim') }}" class="dropdown-item link_underline text-end"><i class="fa-regular fa-circle-question px-2"></i></a>#}
+                </div>
+
+                <a href="{{ path('app_logout') }}" class="dropdown-item link_underline text-end">Se déconnecter<span class="px-2">{{ 'arrow-right-to-bracket'|svg }}</span></a>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+

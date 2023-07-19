@@ -17,9 +17,17 @@ security:
             lazy: true
             provider: app_user_provider
 
+            user_checker: App\Security\UserChecker
+
+            remember_me:
+                secret: '%kernel.secret%' # required
+                lifetime: 604800 # 1 week in seconds
+
             form_login:
+                default_target_path: redirect_user
                 login_path: app_login
                 check_path: app_login
+                enable_csrf: true
 
             logout:
                 path: app_logout
@@ -44,7 +52,8 @@ security:
     # Note: Only the *first* access control that matches will be used
     access_control:
         - { path: ^/login, role: PUBLIC_ACCESS }
-        - { path: ^/, roles: PUBLIC_ACCESS }
+        - { path: ^/register, role: PUBLIC_ACCESS }
+        - { path: ^/, roles: ROLE_USER }
         - { path: ^/_staff, roles: ROLE_SUPER_ADMIN }
         - { path: ^/_admin/, roles: ROLE_ADMIN }
         - { path: ^/u/, roles: ROLE_MEMBER }
@@ -54,7 +63,7 @@ security:
         ROLE_ADMIN: ROLE_CONSULTANT
         ROLE_CONSULTANT: ROLE_USER
         ROLE_CONTRACTOR: ROLE_USER #donneur d'ordre
-        ROLE_INSTALLATOR : ROLE_USER #installateur
+        ROLE_INSTALLER : ROLE_USER #installateur
 
 when@test:
     security:

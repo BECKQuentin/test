@@ -1,0 +1,7 @@
+<div class="user_public_infos">
+    <p class="text-center mb-2">{{ app.user.firstname|capitalize }} {{ app.user.lastname|upper }}</p>
+    <p class="text-center mb-2">{{ app.user.email }}</p>
+    <p class="text-center mb-2">Mot de passe : *******</p>
+    <p class="text-center mb-2">{{ user.phone ? 'tel :'~user.phone : ''}}</p>
+    <p class="text-center mb-2">{{ user.mobile ? 'mobile :'~user.mobile : ''}}</p>
+</div>
