@@ -4,13 +4,7 @@
         <div class="d-flex justify-content-center align-items-center m-2">
 
             <div class="avatar">
-                {% if user.installer is not same as null %}
-                    <img src="{{ asset('assets/img/default/avatar_installer.png') }}" alt="Avatar">
-                {% elseif user.contractor is not same as null %}
-                    <img src="{{ asset('assets/img/default/avatar_contractor.png') }}" alt="Avatar">
-                {% elseif user.consultant is not same as null %}
-                    <img src="{{ asset('assets/img/default/avatar_consultant.png') }}" alt="Avatar">
-                {% endif %}
+                <img src="{{ asset('assets/img/default/avatar_installer.png') }}" alt="Avatar">
             </div>
 
             <div class="p-4">
@@ -28,83 +22,26 @@
                 <span class="svg-primary">{{ 'mobile'|svg }}</span><span>{{ user.mobile }}</span>
             </div>
 
-
-
-            {% if 'ROLE_CONTRACTOR' in user.roles   %}
-                <div class="infos_box d-flex justify-content-between">
-                    <p>Numero contrat cadre : </p><span>{{ user.contractor.numContratCadre }}</span>
-                </div>
-                <div class="infos_box d-flex justify-content-between">
-                    <p>Raison sociale : </p><span>{{ user.contractor.socialReason }}</span>
-                </div>
-                <div class="infos_box d-flex justify-content-between">
-                    <p>Siret : </p><span>{{ user.contractor.numSiret }}</span>
-                </div>
-                <div class="infos_box d-flex justify-content-between">
-                    <p>Adresse : </p><span>{{ user.contractor.address }}</span>
-                </div>
-                <div class="infos_box d-flex justify-content-between">
-                    <p>Ville : </p><span>{{ user.contractor.postalCode }} {{ user.contractor.city }}</span>
-                </div>
-                {% if is_granted('ROLE_ADMIN') %}
-                    <div class="infos_box d-flex justify-content-between">
-                        <p>Dernier email envoyé le: </p><span>{{ user.contractor.lastEmailSentAt }}</span>
-                    </div>
-                {% endif %}
-            {% elseif 'ROLE_INSTALLER' in user.roles %}
-                <div class="infos_box d-flex justify-content-between">
-                    <p>Numero contrat cadre : </p><span>{{ user.installer.numContratCadre }}</span>
-                </div>
-                <div class="infos_box d-flex justify-content-between">
-                    <p>Raison sociale : </p><span>{{ user.installer.socialReason }}</span>
-                </div>
-                <div class="infos_box d-flex justify-content-between">
-                    <p>Siret : </p><span>{{ user.installer.numSiret }}</span>
-                </div>
-                <div class="infos_box d-flex justify-content-between">
-                    <p>Adresse : </p><span>{{ user.installer.address }}</span>
-                </div>
-                <div class="infos_box d-flex justify-content-between">
-                    <p>Ville : </p><span>{{ user.installer.postalCode }} {{ user.installer.city }}</span>
-                </div>
-                {% if is_granted('ROLE_ADMIN') %}
-                    <div class="infos_box d-flex justify-content-between">
-                        <p>Dernier email envoyé le: </p><span>{{ user.installer.lastEmailSentAt }}</span>
-                    </div>
-                {% endif %}
-            {% endif %}
-
-
-
-
             <hr>
 
-            <div class="d-flex p-1">
-                <div class="badge_elan badge_light_green">5 dossier en cours</div>
-                <div class="badge_elan badge_success">5 dossier terminé</div>
-                <div class="badge_elan badge_error">5 dossier refusé</div>
-            </div>
 
-            {% if is_granted('ROLE_CONSULTANT') and app.user is not same as user %}
+
 
                 <div class="d-flex flex-wrap">
                     <a class="btn btn-elan m-1" href="">
-                        {{ 'file-signature'|svg }}Mandats
+                        {{ 'file-signature'|svg }}Vérification
                     </a>
-                    <a class="btn btn-elan m-1" href="">
-                        {{ 'folder-open'|svg }}Dossiers
+                    <a class="btn btn-elan m-1" href={{ path('user_messages_talk_to', {user: user.id}) }}"">
+                        {{ 'message'|svg }}Messages
                     </a>
-                    <a class="btn btn-elan m-1" href="{{ path('consultant_user_edit', {id: user.id}) }}">
-                        {{ 'user-gear'|svg }}Editer
-                    </a>
-                    {% if user.contractor is not null %}
-                        <a class="btn btn-elan m-1" href="{{ path('consultant_contractor_add_installer', {id: user.id}) }}">
-                            {{ 'screwdriver-wrench'|svg }}Installateurs
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <a class="btn btn-elan m-1" href="{{ path('admin_edit_user', {id: user.id}) }}">
+                            {{ 'user-gear'|svg }}Editer
                         </a>
                     {% endif %}
                 </div>
 
-            {% endif %}
+
         </div>
 
 

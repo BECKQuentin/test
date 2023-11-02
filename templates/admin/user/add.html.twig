@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Profil utilisateur{% endblock %}
+
+{% block body %}
+
+
+    <div class="content_box">
+
+        {{ topTabs([
+            { 'url': 'consultant_add_contractor', 'svgs': ['plus', 'helmet-safety'], 'title': 'Créer un donneur d\'ordre', 'role': 'ROLE_CONSULTANT' },
+            { 'url': 'consultant_add_installer', 'svgs': ['plus', 'screwdriver-wrench'], 'title': 'Créer un installateur', 'role': 'ROLE_CONSULTANT' },
+            { 'url': 'admin_add_consultant', 'svgs': ['plus', 'chalkboard-user'], 'title': 'Créer un admin', 'role': 'ROLE_ADMIN' },
+        ]) }}
+
+
+        {% if route_name is same as "consultant_add_contractor" %}
+            <h2>Créer un <b>Donneur d'ordre</b></h2>
+        {% elseif route_name is same as "consultant_add_installer" %}
+            <h2>Créer un <b>Installateur</b></h2>
+        {% elseif route_name is same as "admin_add_consultant" %}
+            <h2>Créer un <b>Consultant</b></h2>
+        {% else %}
+            <h2>Créer un utilisateur</h2>
+        {% endif %}
+
+        <div class="content_box_element">
+
+
+            {% include 'admin/user/form.html.twig' %}
+
+
+        </div>
+    </div>
+
+
+
+
+
+{% endblock %}

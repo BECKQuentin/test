@@ -1,0 +1,8 @@
+<div v-if="alertError" class="alert alert-danger alert-dismissible fade show" role="alert">
+    <div v-text="alertError"></div>
+    <button type="button" class="btn-close" @click="alertError = null" aria-label="close"></button>
+</div>
+<div v-if="alertSuccess" class="alert alert-success alert-dismissible fade show" role="alert">
+    <div v-text="alertSuccess"></div>
+    <button type="button" class="btn-close" @click="alertSuccess = null" aria-label="close"></button>
+</div>

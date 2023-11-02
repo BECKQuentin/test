@@ -9,11 +9,6 @@ user:
     type: attribute
     prefix: '/u/'
 
-consultant:
-    resource: ../src/Controller/Consultant
-    type: attribute
-    prefix: 'consultant'
-
 admin:
     resource: ../src/Controller/Admin
     type: attribute

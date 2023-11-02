@@ -26,7 +26,7 @@ class UserController extends AbstractController
     ) {}
 
 
-    #[Route('/show/{id}', name: 'user_show')]
+    #[Route('/show/{id}', name: 'user_show', options: ['expose' => true])]
     #[IsGranted(AccountVoter::READ, subject: 'user')]
     public function showUser(User $user): Response
     {

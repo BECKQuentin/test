@@ -1,0 +1,96 @@
+{% extends 'base.html.twig' %}
+
+{% block title 'Utilisateurs' %}
+
+{% block body %}
+
+    <div class="content_box">
+
+        <h2>Liste des utilisateurs</h2>
+
+        <div class="content_box_element">
+                {{ form_start(searchForm) }}
+                <div class="row">
+{#                    {% if is_granted('ROLE_ADMIN') %}#}
+{#                        <div class="col-6">#}
+{#                            {{ form_row(searchForm.createdBy) }}#}
+{#                        </div>#}
+{#                    {% endif %}#}
+                    <div class="col-12 col-md-6 position-relative">
+                        <div class="position-absolute top-0 end-0 me-4" title="Ce champ recherche parmis : Email, Prénom, Nom, Code Postal, Ville, Numéro Siret">{{ 'circle-info'|svg }}</div>
+                        {{ form_row(searchForm.q) }}
+                    </div>
+{#                    <div class="col-6 col-md-2">#}
+{#                        {{ form_row(searchForm.numSiret) }}#}
+{#                    </div>#}
+                    <div class="col-6 col-md-2 d-flex align-items-center">
+                        {{ form_row(searchForm.submit) }}
+                    </div>
+                </div>
+                {{ form_end(searchForm) }}
+
+            <hr>
+
+            {% if users|length is not same as 0 %}
+                <div class="table-responsive">
+                    <span>{{ users|length }} utilisateurs trouvés</span>
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">Crée</th>
+                            <th scope="col">Roles</th>
+                            <th scope="col">Nom</th>
+                            <th scope="col">Infos</th>
+                            <th scope="col">Dossiers</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for user in users %}
+                            <tr>
+                                <td>{{ user.createdAt|format_datetime('short', 'none', locale="fr") }}</td>
+                                <td>{{ displayRole(user) }}</td>
+                                <td>
+                                    <div><a href="{{ path('user_show', {id: user.id}) }}" class="link_underline mb-1"><b>{{ user.fullName }}</b></a></div>
+                                    <div><a href="mailto:{{ user.email }}" class="link_underline">{{ user.email }}</a></div>
+                                    {% if user.phone is not null %}
+                                        <div class="d-flex align-items-center">
+                                            <span class="svg-primary me-1">{{ 'phone'|svg }}</span><a href="tel:{{ user.phone }}" class="link_underline">{{ user.phone }}</a>
+                                        </div>
+                                    {% endif %}
+                                    {% if user.mobile is not null %}
+                                        <div class="d-flex align-items-center">
+                                            <span class="svg-primary me-1">{{ 'mobile'|svg }}</span><a href="tel:{{ user.mobile }}" class="link_underline">{{ user.mobile }}</a>
+                                        </div>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <a href="{{ path('user_show', {id: user.id}) }}" title="Voir le profil" class="btn btn-elan-neumorphism">{{ 'eye'|svg }}</a>
+                                    {#                        <a href="{{ path('spiritual_master_show_user', {id: user.id}) }}" class="btn btn-primary">{{ 'app.show'|trans }}</a>#}
+                                    {#                        <a href="{{ path('spiritual_master_edit_user', {id: user.id}) }}" class="btn btn-secondary ms-1">{{ 'app.edit'|trans }}</a>#}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="my-2">
+                    {{ knp_pagination_render(users) }}
+                </div>
+            {% else %}
+                <div class="d-flex flex-column justify-content-center align-items-center">
+                    <img src="{{ asset('assets/img/default/no-energy.png') }}" alt="No energy">
+                    <h4>Aucune données trouvées</h4>
+                </div>
+            {% endif %}
+
+
+        </div>
+
+    </div>
+
+
+
+
+{% endblock %}

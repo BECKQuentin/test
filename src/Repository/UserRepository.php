@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Data\SearchUserData;
 use App\Entity\User;
+use App\Entity\UserCoordinates;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
@@ -73,6 +74,34 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         } else if ($order === 'desc') {
             $qb->orderBy('u.createdAt', 'DESC');
         }
+
+        return $qb->getQuery()->getResult();
+    }
+
+
+    public function findNearest(float $longitude, float $latitude, User $currentUser, int $maxDistance = 100)
+    {
+        $qb = $this->createQueryBuilder('u')
+            ->select('u')
+            ->leftJoin('u.coordinates', 'c')
+
+            ->addSelect('(6371 * ACOS(COS(RADIANS(:latitude)) * COS(RADIANS(c.latitude)) * COS(RADIANS(c.longitude) - RADIANS(:longitude)) + SIN(RADIANS(:latitude)) * SIN(RADIANS(c.latitude))) ) AS distance')
+            ->setParameter('latitude', $latitude)
+            ->setParameter('longitude', $longitude)
+            ->having('distance <= :max_distance')
+            ->setParameter('max_distance', $maxDistance)
+            ->andWhere('u.id != :current_user_id')
+            ->setParameter('current_user_id', $currentUser->getId())
+            ->orderBy('distance', 'ASC');
+
+//
+//        ->select('name', 'latitude', 'longitude', 'region', DB::raw(sprintf(
+//        '(6371 * acos(cos(radians(%1$.7f)) * cos(radians(latitude)) * cos(radians(longitude) - radians(%2$.7f)) + sin(radians(%1$.7f)) * sin(radians(latitude)))) AS distance',
+//        $request->input('latitude'),
+//        $request->input('longitude')
+//    )))
+//        ->having('distance', '<', 50)
+
 
         return $qb->getQuery()->getResult();
     }

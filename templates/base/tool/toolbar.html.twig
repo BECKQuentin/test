@@ -26,17 +26,11 @@
                 <a class="nav-link link_underline"
                    href="" title="Objets"
                    id="navbarDropdownObjects" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    {{ 'box-archive'|svg }}<span class="d-inline d-sm-none">Mes dossiers</span>
+                    {{ 'map-location-dot'|svg }}<span class="d-inline d-sm-none">Mes dossiers</span>
                 </a>
                 <div class="dropdown-menu px-2" aria-labelledby="navbarDropdownObjects">
-                    <a class="dropdown-item link_underline" href="">
-                        <span>{{ 'folder-open'|svg }}Tous mes dossiers</span>
-                    </a>
-                    <a class="dropdown-item link_underline" href="">
-                        <span>{{ 'folder-plus'|svg }}Ajouter un objet</span>
-                    </a>
-                    <a class="dropdown-item" href="">
-                        <span>{{ 'bookmark-full'|svg }}Mes Favoris</span>
+                    <a class="dropdown-item link_underline" href="{{ path('maps_index') }}">
+                        <span>{{ 'map-location-dot'|svg }}Maps</span>
                     </a>
                 </div>
             </li>
@@ -44,8 +38,8 @@
             <hr class="m-0">
 
             <li class="nav-item">
-                <a class="nav-link link_underline" href="#" title="Message">
-                    {{ 'message'|svg }}<span class="d-inline d-sm-none">Mes tickets</span>
+                <a class="nav-link link_underline" href="{{ path('user_messages') }}" title="Message">
+                    {{ 'message'|svg }}<span class="d-inline d-sm-none">Mes conversations</span>
                 </a>
             </li>
             <li class="nav-item">
@@ -76,15 +70,15 @@
                 </li>
 
                 <li class="nav-item dropend toolbar_dropdown">
-                    <a class="nav-link link_underline" href="{{ path('users_index') }}" title="Utilisateurs"
+                    <a class="nav-link link_underline" href="{{ path('admin_users_index') }}" title="Utilisateurs"
                        id="navbarDropdownUsers" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         {{ 'users'|svg }}<span class="d-inline d-sm-none">Utilisateurs</span>
                     </a>
                     <div class="dropdown-menu px-2" aria-labelledby="navbarDropdownUsers">
-                        <a class="dropdown-item link_underline" href="{{ path('users_index') }}">
+                        <a class="dropdown-item link_underline" href="{{ path('admin_users_index') }}">
                             <span>{{ 'user-gear'|svg }}Tous les utilisateurs</span>
                         </a>
-                        <a class="dropdown-item link_underline" href="{{ path('consultant_add_users') }}">
+                        <a class="dropdown-item link_underline" href="{{ path('admin_add_user') }}">
                             <span>{{ 'user-plus'|svg }}Nouvel utilisateur</span>
                         </a>
                     </div>

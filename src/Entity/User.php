@@ -18,14 +18,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
 
-    const ROLE_CONSULTANT   = 'Consultant';
-    const ROLE_CONTRACTOR   = 'Donneur d\'ordre';
-    const ROLE_INSTALLER    = 'Installateur';
     const ROLE_ADMIN        = 'Administrateur';
-    const ROLES = [self::ROLE_CONSULTANT, self::ROLE_CONTRACTOR, self::ROLE_INSTALLER];
-    const LIST_UNIQUE_ROLES = ['ROLE_CONSULTANT', 'ROLE_INSTALLER', 'ROLE_CONTRACTOR'];
-
-
     const MARKING_PASSWORD_REQUESTED = 'password-requested';
     const MARKING_EMAIL_VERIFICATION = 'email-verification';
     const MARKING_ACTIVE = 'active';
@@ -38,15 +31,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['admin_index'])]
+    #[Groups(['basic', 'chat_list', 'chat_message'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 180, unique: true)]
-    #[Groups(['admin_index'])]
+    #[Groups(['basic'])]
     private ?string $email = null;
 
     #[ORM\Column]
-    #[Groups(['admin_index'])]
     private array $roles = [];
 
     /**
@@ -70,7 +62,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         'maxMessage' => 'Votre prénom de peut pas dépasser 255 caractères'
     ])]
     #[ORM\Column(length: 255)]
-    #[Groups(['admin_index'])]
+    #[Groups(['basic'])]
     private ?string $firstname = null;
 
     #[Assert\NotBlank]
@@ -81,7 +73,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         'maxMessage' => 'Votre prénom de peut pas dépasser 255 caractères'
     ])]
     #[ORM\Column(length: 255)]
-    #[Groups(['admin_index'])]
+    #[Groups(['basic'])]
     private ?string $lastname = null;
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -105,14 +97,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?bool $isAgreeRGPD = false;
 
-    #[ORM\OneToOne(inversedBy: 'user', cascade: ['persist', 'remove'])]
-    private ?Contractor $contractor = null;
+    #[ORM\Column(length: 255)]
+    private ?string $locale = null;
 
-    #[ORM\OneToOne(inversedBy: 'user', cascade: ['persist', 'remove'])]
-    private ?Installer $installer = null;
-
-    #[ORM\OneToOne(inversedBy: 'user', cascade: ['persist', 'remove'])]
-    private ?Consultant $consultant = null;
+    #[ORM\OneToOne(mappedBy: 'user', cascade: ['persist', 'remove'])]
+    #[Groups(['basic'])]
+    private ?UserCoordinates $coordinates = null;
 
     public function __construct()
     {
@@ -121,6 +111,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         }
     }
 
+    #[Groups(['basic', 'chat_list', 'chat_message'])]
     public function getFullName(): string
     {
         return ucfirst($this->firstname) . ' ' . strtoupper($this->lastname);
@@ -332,38 +323,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getContractor(): ?Contractor
+    public function getLocale(): ?string
     {
-        return $this->contractor;
+        return $this->locale;
     }
 
-    public function setContractor(?Contractor $contractor): static
+    public function setLocale(string $locale): static
     {
-        $this->contractor = $contractor;
+        $this->locale = $locale;
 
         return $this;
     }
 
-    public function getInstaller(): ?Installer
+    public function getCoordinates(): ?UserCoordinates
     {
-        return $this->installer;
+        return $this->coordinates;
     }
 
-    public function setInstaller(?Installer $installer): static
+    public function setCoordinates(?UserCoordinates $coordinates): static
     {
-        $this->installer = $installer;
+        // unset the owning side of the relation if necessary
+        if ($coordinates === null && $this->coordinates !== null) {
+            $this->coordinates->setUser(null);
+        }
 
-        return $this;
-    }
+        // set the owning side of the relation if necessary
+        if ($coordinates !== null && $coordinates->getUser() !== $this) {
+            $coordinates->setUser($this);
+        }
 
-    public function getConsultant(): ?Consultant
-    {
-        return $this->consultant;
-    }
-
-    public function setConsultant(?Consultant $consultant): static
-    {
-        $this->consultant = $consultant;
+        $this->coordinates = $coordinates;
 
         return $this;
     }

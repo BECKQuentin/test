@@ -3,7 +3,7 @@
 {% set route_name = app.request.attributes.get('_route') %}
 <head>
     <meta charset="UTF-8">
-    <title>{% block title %}Accueil{% endblock %} | Coprotec - ELAN</title>
+    <title>{% block title %}Accueil{% endblock %} | Gemonos</title>
     <meta name="description" content="">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,7 +13,7 @@
     <meta name="theme-color" content="#ffffff">
     <meta property="og:title" content=""/>
     <meta property="og:type" content="website"/>
-    <meta property="og:description" content="Coprotec | ELAN"/>
+    <meta property="og:description" content="Gemonos"/>
     <meta property="og:url" content=""/>
     <meta property="og:locale" content="fr_FR"/>
     <meta property="og:site_name" content=""/>
@@ -32,7 +32,7 @@
     {% block stylesheets %}
         {{ encore_entry_link_tags('app') }}
         <!--FAVICON-->
-        <link rel="icon" type="image/png" href="{{ asset('assets/img/logos/logo-elan.png') }}"/>
+        <link rel="icon" type="image/png" href="{{ asset('assets/img/logos/logo.png') }}"/>
     {% endblock %}
 
     {% block javascripts %}
@@ -77,7 +77,7 @@
 
                 <div id="content" class="d-flex flex-column justify-content-between" style="min-height: 92vh">
                     <div>
-                        <h1 class="text-end pe-4 text-white">Coprotec - ELAN</h1>
+                        <h1 class="text-end pe-4 text-white">Gemonos</h1>
 
                         <div class="mx-3">
                             {% include "base/flash.html.twig" %}

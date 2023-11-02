@@ -1,0 +1,146 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'page.back.user.message.title'|trans }}{% endblock %}
+
+{% block body %}
+
+    <div class="content_box">
+        <message init-locale="{{ app.user.locale }}"
+                 init-current-user-id="{{ app.user.id }}"
+                 init-is-admin-checkin="{{ isAdminCheckin }}"
+                 init-chat-list="{{ jsonChatList }}"
+                 init-chat-request="{{ jsonChatRequest }}"
+        ></message>
+    </div>
+
+{% endblock %}
+
+{% block vue_templates %}
+
+    <template id="template_message">
+
+        {% include 'base/tool/alert_vue_js.html.twig' %}
+
+        <div id="messageContainer" class="d-flex flex-column flex-xl-row">
+
+            <div id="inBox" class="">
+                <div class="inBox__title">
+                    <h2>Conversation</h2>
+                    <div class="d-flex">
+                        <span>(${chatList.length} conversation)</span>
+                        <div class="d-flex d-xl-none inBox__toggle-btn"
+                             @click="toggleInBox">{{ 'chevron-up'|svg }}</div>
+                    </div>
+                </div>
+
+
+                <div :class="['inBox__content', inBoxDisabled ? 'inBox__content__disable_mobile' : '']"
+                     @scroll="onScrollBotConversation">
+
+                    <div v-for="chat in chatList"
+                         v-bind:class="['inBox__content__conversation', activeChat ? activeChat.id === chat.id ? 'active' : '' : '']"
+                         v-on:click.prevent="activeChat?.id !== chat.id && changeConversation(chat.id)"
+                    >
+
+                        <div class="d-flex align-items-center">
+                            <img :src="chat.user1.id === currentUserId ? chat.user2.image : chat.user1.image" class="profil_img" alt="" width="50">
+                            <div>
+                                <div class="fs-4">
+                                    ${ chat.user1.id === currentUserId ? chat.user2.fullName : chat.user1.fullName }
+                                </div>
+                                <p class="text-secondary me-3">${ chat.lastMessageAbstract }</p>
+                            </div>
+                        </div>
+
+                        <div class="d-flex flex-column justify-content-center align-items-center ">
+                            <div class="text-nowrap">${ chat.lastMessageCreatedAt }</div>
+
+
+                            <span v-if="canDisplayUnreadMessage(chat)" class="badge badge-primary rounded-circle">
+                                ${ chat.unreadMessagesCount }
+                            </span>
+
+                        </div>
+                    </div>
+
+                    <div v-if="isConversationLoading" class="loading_container"><div class="loading"><div></div><div></div><div></div><div></div></div></div>
+                </div>
+            </div>
+
+            <div id="messageContent">
+
+                <div v-if="activeChat" class="messageContent__title" >
+
+
+                    <div v-if="!isAdminCheckin" class="d-flex align-items-center" >
+                        <img :src="activeChat.user1.id === currentUserId ? activeChat.user2.image : activeChat.user1.image" class="profil_img" alt="" width="50">
+                        <a :href="$path('user_show', {id: activeChat.user1.id === currentUserId ? activeChat.user2.id : activeChat.user1.id })" target="_blank" class="fs-3">
+                            ${ activeChat.user1.id === currentUserId ? activeChat.user2.fullName : activeChat.user1.fullName }
+                        </a>
+                    </div>
+                    <div v-else class="d-flex align-items-center justify-content-between w-100 px-4">
+                        <div class="d-flex align-items-center">
+                            <img :src="activeChat.user2.image" class="profil_img" alt="" width="50">
+                            <a :href="$path('user_show', {id: activeChat.user2.id})" target="_blank" class="fs-3 text-nowrap">
+                                ${ activeChat.user2.fullName }
+                            </a>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <img :src="activeChat.user1.image" class="profil_img" alt="" width="50">
+                            <a :href="$path('user_show', {id: activeChat.user1.id})" target="_blank" class="fs-3 text-center">
+                                ${ activeChat.user1.fullName }
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="ellipsis">
+                        <div :class="['toggle-ellipsis', {'active' : !ellipsisDisabled}]" @click="toggleEllipsis">{{ 'ellipsis'|svg }}</div>
+
+                        <div :class="['ellipsis-menu',  {'active' : !ellipsisDisabled}]">
+                            <a v-if="!isAdminCheckin" class="ellipsis-item" href="#" @click.prevent="reportChat(activeChat, 'confirmer')">Report</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="messageContent__content">
+
+                    <div class="messageContent__content__body__alert">
+                        <div v-if="!activeChat" class="alert alert-info">{{ 'page.back.user.message.message_content.title.no_active_chat'|trans|raw }}</div>
+                        <div v-if="groupedMessages?.length === 0 && !isMessageLoading && activeChat" class="alert alert-info">{{ 'page.back.user.message.message_content.body.start_chatting'|trans|raw }}</div>
+                        <div v-if="isAdminCheckin" class="alert alert-info ">{{ 'page.back.user.message.message_content.consulting_as_admin'|trans|raw }}</div>
+                        <div v-if="isMessageLoading || isOlderMessageLoading" class="loading_container"><div class="loading"><div></div><div></div><div></div><div></div></div></div>
+                    </div>
+
+                    <div v-if="activeChat" class="messageContent__content__body" @scroll="onScrollTopMessage" ref="messageContentBody">
+
+                        <div v-for="(group, index) in groupedMessages" :key="index"
+                             :class="[
+                            'messageContent__content__bubble',
+                             group[0].sender.id === currentUserId ? 'sender' : 'receiver',
+                             (group[group.length-1].readAt != null && group[group.length-1].readAt !== '') && (group[group.length-1].sender.id === currentUserId || isAdminCheckin) ? 'read' : '',
+                        ]">
+
+                            <div v-for="(message, index) in group" :key="index" class="bubble" :title="'sent at ' + message.createdAtStr">
+                                ${ message.content }
+                            </div>
+
+
+                            <div class="bubble_infos">
+                                <span class="date">${ group[group.length-1].createdAtStr } </span><span v-if="isAdminCheckin"> - ${ group[group.length-1].sender.fullName }</span>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <form v-if="activeChat && !isAdminCheckin" class="messageContent__content__input" @submit.prevent="sendMessage">
+                        <textarea name="send" v-model="messageContent" placeholder="Entrez votre message ici"></textarea>
+                        <button type="submit" class="submit">{{ 'paper-plane'|svg }}</button>
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+    </template>
+{% endblock %}
